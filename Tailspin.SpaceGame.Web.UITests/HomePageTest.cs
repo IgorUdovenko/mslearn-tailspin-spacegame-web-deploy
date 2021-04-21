@@ -9,14 +9,15 @@ using System.Collections;
 
 namespace UITests
 {
-    [TestFixture("Chrome")]
-    [TestFixture("Firefox")]
+//    [TestFixture("Chrome")]
+//    [TestFixture("Firefox")]
     [TestFixture("Edge")]
     public class HomePageTest
     {
-        private string browser;
+        private readonly string browser;
         private IWebDriver driver;
-
+        private const string driverDir = @"C:\Work\mslearn-tailspin-spacegame-web-deploy\Tailspin.SpaceGame.Web.UITests\bin\Release\netcoreapp3.1";
+        private const string SITE_URL = @"http://tailspin-spacegame-web.azurewebsites.net";
         public HomePageTest(string browser)
         {
             this.browser = browser;
@@ -32,17 +33,20 @@ namespace UITests
                 {
                   case "Chrome":
                     driver = new ChromeDriver(
-                        Environment.GetEnvironmentVariable("ChromeWebDriver")
+                        driverDir
+//                        Environment.GetEnvironmentVariable("ChromeWebDriver")
                     );
                     break;
                   case "Firefox":
                     driver = new FirefoxDriver(
-                        Environment.GetEnvironmentVariable("GeckoWebDriver")
+                    driverDir
+//                        Environment.GetEnvironmentVariable("GeckoWebDriver")
                     );
                     break;
                   case "Edge":
                     driver = new EdgeDriver(
-                        Environment.GetEnvironmentVariable("EdgeWebDriver"),
+                        driverDir,
+//                        Environment.GetEnvironmentVariable("EdgeWebDriver"),
                         new EdgeOptions
                         {
                             UseChromium = true
@@ -59,7 +63,8 @@ namespace UITests
                 // Navigate to the site.
                 // The site name is stored in the SITE_URL environment variable to make 
                 // the tests more flexible.
-                string url = Environment.GetEnvironmentVariable("SITE_URL");
+//                string url = Environment.GetEnvironmentVariable("SITE_URL");
+                string url = SITE_URL;
                 driver.Navigate().GoToUrl(url + "/");
 
                 // Wait for the page to be completely loaded.
@@ -87,6 +92,7 @@ namespace UITests
                 driver.Quit();
             }
         }
+
 
         // Download game
         [TestCase("download-btn", "pretend-modal")]
